@@ -33,7 +33,7 @@ def get_estudiantes(db: Session = Depends(get_db)):
         EstudianteModel(
             id_estudiante=e.id_estudiante,
             nombre=e.nombre,
-            fecha_nacimiento=e.fecha_nacimiento.strftime('%Y-%m-%d'),  # Convertir a string
+            fecha_nacimiento=e.fecha_nacimiento.strftime('%Y-%m-%d'), 
             email=e.email,
             id_carrera=e.id_carrera
         ) for e in estudiantes
@@ -41,7 +41,6 @@ def get_estudiantes(db: Session = Depends(get_db)):
 
 @app.post("/estudiantes", response_model=str)
 def add_estudiante(estudiante: EstudianteModel, db: Session = Depends(get_db)):
-    # Convertir la cadena de fecha a datetime
     fecha_nacimiento = datetime.strptime(estudiante.fecha_nacimiento, '%Y-%m-%d').date()
     
     # Verificar si la carrera existe
