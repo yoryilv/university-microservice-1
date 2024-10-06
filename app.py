@@ -19,10 +19,6 @@ class CarreraModel(BaseModel):
     id_carrera: str
     nombre_carrera: str
 
-@app.on_event("startup")
-def startup():
-    Base.metadata.create_all(bind=engine)
-
 def get_db():
     db_session = SessionLocal()
     try:

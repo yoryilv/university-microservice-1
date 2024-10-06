@@ -1,12 +1,15 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Base  # Importar Base desde models
 
-DATABASE_URL = "mysql://root:Aloramdon1!@localhost:3306/sistema_universidad"
+# Cambia los detalles de conexión por la IP elástica y credenciales correctas
+DATABASE_URL = "mysql+mysqlclient://usuario:contraseña@IP_ELASTICA_AWS/nombre_bd"
 
-# Crea el motor de conexión
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-def init_db():
-    Base.metadata.create_all(bind=engine)  # Crear todas las tablas
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
